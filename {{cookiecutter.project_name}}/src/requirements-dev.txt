@@ -1,0 +1,4 @@
+-r requirements.txt
+pytest==3.5.1
+pytest-vcr==0.3.0
+vcrpy==1.11.1
