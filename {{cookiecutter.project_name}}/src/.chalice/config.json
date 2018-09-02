@@ -1,0 +1,30 @@
+{
+    "stages": {
+        "ci": {
+            "autogen_policy": false,
+            "iam_policy_file": "policy-ci.json",
+            "api_gateway_stage": "ci",
+            "environment_variables": {
+                "STAGE_NAME": "ci"
+            }
+        },
+        "test": {
+            "autogen_policy": false,
+            "api_gateway_stage": "test",
+            "iam_policy_file": "policy-test.json",
+            "environment_variables": {
+                "STAGE_NAME": "test"
+            }
+        },
+        "test": {
+            "autogen_policy": false,
+            "api_gateway_stage": "production",
+            "iam_policy_file": "policy-production.json",
+            "environment_variables": {
+                "STAGE_NAME": "production"
+            }
+        }
+    },
+    "version": "2.0",
+    "app_name": "{{cookiecutter.project_name}}"
+}

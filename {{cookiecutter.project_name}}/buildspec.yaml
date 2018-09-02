@@ -1,0 +1,28 @@
+version: 0.2
+env:
+  variables:
+    STAGE_NAME: 'ci'
+
+phases:
+  install:
+    commands:
+      - sudo add-apt-repository ppa:openjdk-r/ppa
+      - sudo apt-get update
+      - sudo apt-get install -y openjdk-8-jre
+      - wget http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest.tar.gz -O /tmp/dynamodb_local_latest.tar.gz
+      - tar -xzf /tmp/dynamodb_local_latest.tar.gz -C /tmp
+      - sudo pip install -r src/requirements-dev.txt
+  pre_build:
+    commands:
+      - java -Djava.library.path=/tmp/DynamoDBLocal_lib -jar /tmp/DynamoDBLocal.jar -inMemory -port 8888 &
+      - sleep 2
+      - make test --directory src/
+  build:
+    commands:
+      - cd src && chalice package --stage ci /tmp/packaged
+      - sudo pip install --upgrade awscli # keep it here, awscli dependencies break the app
+      - aws cloudformation package --template-file /tmp/packaged/sam.json --s3-bucket ${APP_S3_BUCKET} --output-template-file ../transformed.yaml
+artifacts:
+  type: zip
+  files:
+    - transformed.yaml
