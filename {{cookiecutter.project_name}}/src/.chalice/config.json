@@ -16,7 +16,7 @@
                 "STAGE_NAME": "test"
             }
         },
-        "test": {
+        "production": {
             "autogen_policy": false,
             "api_gateway_stage": "production",
             "iam_policy_file": "policy-production.json",

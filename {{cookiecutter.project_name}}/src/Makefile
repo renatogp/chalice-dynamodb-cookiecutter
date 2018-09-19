@@ -5,7 +5,10 @@ test-pdb:
 	STAGE_NAME=test DYNAMODB_HOST=http://localhost:8888 py.test -v --gherkin-terminal-reporter --pdb
 
 run:
-	STAGE_NAME=test DYNAMODB_HOST=http://localhost:8888 chalice local --stage dev
+	STAGE_NAME=dev DYNAMODB_HOST=http://localhost:8888 chalice local --stage dev
+
+create-cfn-stack:
+	aws cloudformation deploy --stack-name {{cookiecutter.project_name}} --template-file ../pipeline.yaml --capabilities CAPABILITY_IAM
 
 deploy-test:
 	chalice deploy --stage test --no-autogen-policy
