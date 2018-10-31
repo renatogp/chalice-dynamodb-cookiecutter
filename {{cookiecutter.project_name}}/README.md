@@ -2,15 +2,17 @@
 
 
 ## Pre-requisites
-- Python 3.6.5 (take a look at `pyenv`)
+- Python 3.6.5 (take a look at [`pyenv`](https://github.com/pyenv/pyenv))
 
 ## How to run locally
 
 - Clone this repo
-- Install Local DynamoDB: `sudo make install-ddb`
 - Create a Python 3.6.5 virtual env: `mkvirtualenv {{cookiecutter.project_name}} --python=python3.6.5`
-- Start local DynamoDB instance: `make start-ddb`
-- Start local app server: `make run`
+- Install dependencies: `pip install -r src/requirements-dev.txt`
+- Install Local DynamoDB: `sudo make install-ddb`
+- Start local DynamoDB instance: `make start-ddb -C src/`
+- Run tests: `make test -C src/`
+- Start local app server: `make run -C src/`
 
 You can access using `http://localhost:8000`
 
